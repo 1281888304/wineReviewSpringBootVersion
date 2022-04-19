@@ -4,11 +4,13 @@ import com.example.wines.pojo.Location;
 import com.example.wines.pojo.ProfessionalRatings;
 import com.example.wines.pojo.ProfessionalReviews;
 import com.example.wines.pojo.ProfessionalWineReview;
+import com.example.wines.pojo.UserReview;
 import com.example.wines.pojo.Wines;
 import com.example.wines.service.LocationService;
 import com.example.wines.service.ProfessionRattingService;
 import com.example.wines.service.ProfessionReviewService;
 import com.example.wines.service.ProfessionWineReviewService;
+import com.example.wines.service.UserReviewService;
 import com.example.wines.service.UserService;
 import com.example.wines.service.WineService;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,6 +37,8 @@ public class GeneralController {
   private ProfessionWineReviewService professionWineReviewService;
   @Autowired
   private UserService userService;
+  @Autowired
+  private UserReviewService userReviewService;
 
   @RequestMapping("/detail/{wineTitle}")
   public String getWinesDetailByTitle(@PathVariable("wineTitle") String wineTitle,
@@ -53,6 +58,14 @@ public class GeneralController {
     map.put("point",point);
     map.put("full",fullReview);
 
+    //user review
+    UserReview userReview=userReviewService.findReviewByTitle(wineTitle);
+    map.put("userReview",userReview);
+    boolean containsUserReview=false;
+    if(userReview!=null){
+      containsUserReview=true;
+    }
+    map.put("containsUserReview",containsUserReview);
     return "wineDetail";
   }
 
@@ -68,5 +81,25 @@ public class GeneralController {
     String currentUser= SecurityContextHolder.getContext().getAuthentication().getName();
     return currentUser;
   }
+
+  @RequestMapping("/addReview/{wineTitle}")
+  public String addReviewPage(@PathVariable("wineTitle") String wineTitle,Map<String,Object> map){
+    String currentUser= SecurityContextHolder.getContext().getAuthentication().getName();
+    map.put("wineTitle",wineTitle);
+    map.put("currentUser",currentUser);
+    return "add_review";
+
+  }
+
+  @PostMapping("/doAddReview")
+
+  public String doAddReview(UserReview userReview){
+    userReviewService.addReview(userReview);
+
+    return "redirect:/detail/"+userReview.getWineTitle();
+
+  }
+
+
 
 }
