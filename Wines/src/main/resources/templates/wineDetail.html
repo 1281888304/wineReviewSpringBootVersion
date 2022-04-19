@@ -23,16 +23,22 @@
         <li class="list-group-item">Province:  <span th:text="${location.province}"></span></li>
         <li class="list-group-item">Region1:  <span th:text="${location.regin1}"></span></li>
         <li class="list-group-item">Region2:  <span th:text="${location.regin2} eq null ?'not found':${location.regin2}"></span></li>
-<!--        <li class="list-group-item">Reviewer:  <span th:text="${full.tasterName} eq null ? 'not found' : ${full.tasterName} " ></span></li>-->
-<!--        <li class="list-group-item">Reviewer Twitter:-->
-<!--          <span th:text="${full.tasterTwitter} eq null ? 'not found' : ${full.tasterTwitter}"></span> </li>-->
+
+
 
 
       </ul>
+
+      <ul th:if="${userReview}!=null">
+        <li class="list-group-item">User's price:  <span th:text="${userReview.price}"></span></li>
+        <li class="list-group-item">User's points:  <span th:text="${userReview.point}"></span></li>
+        <li class="list-group-item">User's description:  <span th:text="${userReview.description}"></span></li>
+        <li class="list-group-item">Review by  <span th:text="${userReview.userName}"></span></li>
+      </ul>
       <div class="card-body">
         <a href="/wine/" class="card-link">Back to Wines List</a>
-        <a href="/winery/" class="card-link">Back to Winery List</a>
-        <a href="#">Add your Review</a>
+        <a href="/winery/" class="card-link">Back to Winery List   </a>
+        <a th:href="@{'/addReview/'+${wine.wineTitle}}">    Add your Review</a>
       </div>
     </div>
 
