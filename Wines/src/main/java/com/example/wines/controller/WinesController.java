@@ -1,5 +1,6 @@
 package com.example.wines.controller;
 
+import com.example.wines.pojo.ProfessionalWineReview;
 import com.example.wines.pojo.Wines;
 import com.example.wines.service.WineryService;
 import com.example.wines.service.impl.ProfessionWineReviewServiceImpl;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -132,11 +134,54 @@ public class WinesController {
   /**
    *search wines by wine title
    */
-  @PostMapping("/searchWine")
+  @RequestMapping("/searchWine")
   public String searchWinesByWineTitle(String wineTitle){
 
 
     return "redirect:/detail/"+wineTitle;
+  }
+
+  @RequestMapping("/filter")
+  public String filter(Map<String,Object> map){
+    map.put("filted",false);
+    return "filter";
+  }
+
+  @PostMapping("/doFilter/{pageNum}")
+
+  public String filterParam(@PathVariable("pageNum") Integer pageNum,String filter,Map<String,Object> map){
+    System.out.println("filter -->"+filter);
+    return "redirect:/wine/filter/"+filter+"/1";
+  }
+
+  @GetMapping("/filter/{filter}/{pageNum}")
+  public String filter(@PathVariable("filter") String filter,
+      @PathVariable("pageNum") Integer pageNum,Map<String,Object> map){
+    List<ProfessionalWineReview> wines = professionWineReviewServiceImpl.findByFilter(filter,pageNum,winesPerPage);
+    map.put("wineList",wines);
+    System.out.println("filter -->"+filter);
+    PageInfo<ProfessionalWineReview> pageInfo=professionWineReviewServiceImpl.getPageInfo();
+    map.put("pageInfo",pageInfo);
+    map.put("filted",true);
+    Integer currentPage=pageInfo.getPageNum();
+    if(currentPage==1){
+      map.put("isFirstPage",true);
+    }
+    else{
+      map.put("isFirstPage",false);
+    }
+    map.put("filter",filter);
+    return "filter_list";
+  }
+
+//after_filter
+  @RequestMapping("/detail2/{wineTitle}")
+  public String afterFilter(@PathVariable("wineTitle") String wineTitle, Map<String,Object> map){
+    ProfessionalWineReview review= professionWineReviewServiceImpl.findByTitle(wineTitle);
+    map.put("review",review);
+    return "after_filter";
+
+
   }
 
 

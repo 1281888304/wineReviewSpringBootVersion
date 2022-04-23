@@ -7,10 +7,31 @@
 
   <!--findAllUser-->
   <select id="selectAll" resultType="professionalWineReview">
-    select * from ProfessionalWineReview limit 10;
+    select * from ProfessionalWineReview
   </select>
 
   <select id="findByTitle" resultType="professionalWineReview">
     select * from ProfessionalWineReview where wineTitle=#{wineTitle} limit 1
   </select>
+
+
+  <select id="selectWithOrder" resultType="professionalWineReview">
+
+    select * from ProfessionalWineReview where price is not null
+                                           and country is not NULL
+                                           and points is not null
+                                           and winery is not null
+                                            order by
+                <if test='filter=="Points"'>Points desc</if>
+                <if test='filter=="Price"'>Price desc</if>
+                <if test='filter=="priceLow"'>Price</if>
+                <if test='filter=="Country"'>Country</if>
+                <if test='filter=="Winery"'>Winery</if>
+  </select>
+
+  <select id="selectCountry" resultType="professionalWineReview">
+    select Country from ProfessionalWineReview limit 5
+  </select>
+
+
 </mapper>
