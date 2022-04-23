@@ -100,33 +100,33 @@ public class GeneralController {
     return "redirect:/detail/"+userReview.getWineTitle();
 
   }
-
-  @PostMapping("/check")
-  @ResponseBody
-  public String checkAjax(@PathVariable("username") String username,HttpServletRequest req){
-    System.out.println("from ajax ---->"+username);
-    String username2=req.getParameter("username");
-    System.out.println("from request ---->"+username);
-    return "testAjax";
-  }
-
-  /**
-   * 鼠标离开文本框判断用户是否输入
-   * @param buyerName 身材名
-   * @param request
-   * @return
-   * @throws Exception
-   */
-  @RequestMapping(value="/checkBuyerFigure",produces="text/html;charset=UTF-8")
-  @ResponseBody
-  public String checkBuyerFigure(
-      String buyerName,
-      HttpServletRequest request
-  ) throws Exception{
-    //msg 返回信息
-    String msg = null;
-    return "ok";
-  }
+//
+//  @PostMapping("/check")
+//  @ResponseBody
+//  public String checkAjax(@PathVariable("username") String username,HttpServletRequest req){
+//    System.out.println("from ajax ---->"+username);
+//    String username2=req.getParameter("username");
+//    System.out.println("from request ---->"+username);
+//    return "testAjax";
+//  }
+//
+//  /**
+//   * 鼠标离开文本框判断用户是否输入
+//   * @param buyerName 身材名
+//   * @param request
+//   * @return
+//   * @throws Exception
+//   */
+//  @RequestMapping(value="/checkBuyerFigure",produces="text/html;charset=UTF-8")
+//  @ResponseBody
+//  public String checkBuyerFigure(
+//      String buyerName,
+//      HttpServletRequest request
+//  ) throws Exception{
+//    //msg 返回信息
+//    String msg = null;
+//    return "ok";
+//  }
 
 
 }

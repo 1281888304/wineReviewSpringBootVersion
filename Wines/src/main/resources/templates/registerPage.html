@@ -13,8 +13,8 @@
     <tr>
       <td align="right">Username：</td>
       <td>
-        <input type="text"  id="username" name="username" onblur="check()" size="25px" maxlength="10" placeholder="Userame"  required/>
-        <span id="errorMsg" style="color:red"></span>
+        <input type="text"  id="username" name="username"  size="25px" maxlength="10" placeholder="Userame"  required/>
+
       </td>
     </tr>
     <tr>
@@ -47,51 +47,35 @@
   </table>
 </form>
 
-<script src="js/jquery.min.js"></script>
-<script>
-  function checkUname(){
-    // 获取输入框中的内容
-    if(null == $("#username").val() || '' == $("#username").val()){
-      $("#unameInfo").text("用户名不能为空");
-      return;
-    }
-    $("#unameInfo").text("");
-    // 通过jQuery.ajax() 发送异步请求
-    $.ajax(
-        {
-          type:"GET",// 请求的方式 GET  POST
-          url:"check/", // 请求的后台服务的路径
-          data:"uname="+$("#username").val(),// 提交的参数
-          success:function(info){ // 响应成功执行的函数
-            $("#unameInfo").text(info)
-          }
-        }
-    )
-  }
-</script>
+<!--<script src="js/jquery.min.js"></script>-->
+<!--<script>-->
+<!--  function checkUname(){-->
+<!--    // 获取输入框中的内容-->
+<!--    if(null == $("#username").val() || '' == $("#username").val()){-->
+<!--      $("#unameInfo").text("用户名不能为空");-->
+<!--      return;-->
+<!--    }-->
+<!--    $("#unameInfo").text("");-->
+<!--    // 通过jQuery.ajax() 发送异步请求-->
+<!--    $.ajax(-->
+<!--        {-->
+<!--          type:"GET",// 请求的方式 GET  POST-->
+<!--          url:"check/", // 请求的后台服务的路径-->
+<!--          data:"uname="+$("#username").val(),// 提交的参数-->
+<!--          success:function(info){ // 响应成功执行的函数-->
+<!--            $("#unameInfo").text(info)-->
+<!--          }-->
+<!--        }-->
+<!--    )-->
+<!--  }-->
+<!--</script>-->
 
 
-<!--jQuery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!--ajax-->
+
 
 
 <script>
 
-  function check(){
-    $.post({
-      url:"/check",
-      data:{'username':$("#username").val()},
-      success:function (data) {
-        if (data.toString()=='OK'){
-          $("#username").css("color","green");
-        }else {
-          $("#username").css("color","red");
-        }
-        $("#errorMsg").html(data);
-      }
-    });
-  }
 
 
 
