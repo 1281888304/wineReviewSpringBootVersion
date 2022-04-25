@@ -52,6 +52,8 @@ public class WebSecurityLoginConfig extends WebSecurityConfigurerAdapter {
         //开启表单登录，即登录界面，登录URL为/login，登录参数用户名username密码password
         //Ajax或移动端通过POST请求登录，接口为/login，permitAll表示登录不需要认证即可访问
         .and()
+        .logout()
+        .logoutUrl("/logout").logoutSuccessUrl("/login").and()
         .formLogin()
         .loginProcessingUrl("/login")
         .permitAll()
@@ -63,6 +65,7 @@ public class WebSecurityLoginConfig extends WebSecurityConfigurerAdapter {
             response.sendRedirect("/");
           }
         })
+
         .and()
         .csrf()
         .disable();

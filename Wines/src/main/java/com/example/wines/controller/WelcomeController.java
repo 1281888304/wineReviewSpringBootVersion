@@ -1,5 +1,6 @@
 package com.example.wines.controller;
 
+import java.util.Map;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,10 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class WelcomeController {
 
   @RequestMapping("/")
-  @ResponseBody
-  public String home() {
+
+  public String home(Map<String,Object> map) {
     String currentUser= SecurityContextHolder.getContext().getAuthentication().getName();
-    return "Dear user "+currentUser;
+    map.put("username",currentUser);
+    return "home";
   }
 
 }
