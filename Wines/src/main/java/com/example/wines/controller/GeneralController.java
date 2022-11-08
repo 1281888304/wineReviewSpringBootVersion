@@ -13,11 +13,13 @@ import com.example.wines.service.ProfessionWineReviewService;
 import com.example.wines.service.UserReviewService;
 import com.example.wines.service.UserService;
 import com.example.wines.service.WineService;
+import java.beans.Transient;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +44,7 @@ public class GeneralController {
   private UserReviewService userReviewService;
 
   @RequestMapping("/detail/{wineTitle}")
+  @Transactional
   public String getWinesDetailByTitle(@PathVariable("wineTitle") String wineTitle,
       Map<String,Object> map){
     Location location=locationService.findLocationByWineTitle(wineTitle);
